@@ -1,0 +1,53 @@
+<div class="club-students">
+  <h3><i class="fas fa-users"></i> {{club}}</h3>
+
+  <ng-container *ngIf="students$ | async as students">
+    <div *ngIf="students.length === 0" class="no-students">
+      <i class="far fa-folder-open"></i> No hay estudiantes registrados en este club.
+    </div>
+
+    <div *ngIf="students.length > 0" class="table-responsive">
+      <table class="student-table">
+        <thead>
+          <tr>
+            <th><i class="fas fa-id-card"></i> N° Alumno</th>
+            <th><i class="fas fa-user"></i> Nombre Completo</th>
+            <th><i class="fas fa-envelope"></i> Correo</th>
+            <th><i class="fas fa-cog"></i> Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let student of students; trackBy: trackById">
+            <td>{{student.studentNumber}}</td>
+            <td>{{student.fullName}}</td>
+            <td>{{student.email}}</td>
+            <td class="actions">
+              <button (click)="editStudent(student)" class="edit-btn" title="Editar">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button (click)="requestDelete(student)" class="delete-btn" title="Eliminar">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
+
+  <!-- Diálogo de confirmación de eliminación -->
+  <div *ngIf="showDeleteConfirmation" class="confirmation-dialog">
+    <div class="confirmation-content">
+      <h3><i class="fas fa-exclamation-triangle"></i> Confirmar eliminación</h3>
+      <p>¿Estás seguro de que deseas eliminar a <strong>{{studentToDelete?.fullName}}</strong> ({{studentToDelete?.studentNumber}})?</p>
+      <div class="confirmation-buttons">
+        <button (click)="cancelDelete()" class="cancel-button">
+          <i class="fas fa-times"></i> Cancelar
+        </button>
+        <button (click)="confirmDelete()" class="confirm-button">
+          <i class="fas fa-trash-alt"></i> Eliminar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

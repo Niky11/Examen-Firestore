@@ -1,0 +1,63 @@
+<form [formGroup]="studentForm" (ngSubmit)="onSubmit()" class="student-form">
+
+
+<div *ngIf="showMessage" 
+class="notification {{messageType}} show"
+[ngClass]="{'show': showMessage, 'hide': !showMessage}">
+{{message}}
+</div>
+  <div class="form-group">
+    <label for="studentNumber">
+      <i class="fas fa-id-card"></i> Número de Alumno:
+    </label>
+    <input type="text" id="studentNumber" formControlName="studentNumber" class="form-control">
+    <div *ngIf="studentForm.get('studentNumber')?.invalid && studentForm.get('studentNumber')?.touched" class="error-message">
+      <i class="fas fa-exclamation-circle"></i> Número de alumno requerido (solo números)
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="fullName">
+      <i class="fas fa-user"></i> Nombre Completo:
+    </label>
+    <input type="text" id="fullName" formControlName="fullName" class="form-control">
+    <div *ngIf="studentForm.get('fullName')?.invalid && studentForm.get('fullName')?.touched" class="error-message">
+      <i class="fas fa-exclamation-circle"></i> Nombre completo requerido
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="email">
+      <i class="fas fa-envelope"></i> Correo Electrónico:
+    </label>
+    <input type="email" id="email" formControlName="email" class="form-control">
+    <div *ngIf="studentForm.get('email')?.invalid && studentForm.get('email')?.touched" class="error-message">
+      <i class="fas fa-exclamation-circle"></i> Correo electrónico válido requerido
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="club">
+      <i class="fas fa-users"></i> Club:
+    </label>
+    <select id="club" formControlName="club" class="form-control" [disabled]="isEditing">
+      <option value="">Seleccione un club</option>
+      <option *ngFor="let club of clubs" [value]="club" [selected]="isEditing && club === studentToEdit?.club">
+        {{club}}
+      </option>
+    </select>
+    <div *ngIf="studentForm.get('club')?.invalid && studentForm.get('club')?.touched" class="error-message">
+      <i class="fas fa-exclamation-circle"></i> Debe seleccionar un club
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" [disabled]="studentForm.invalid" class="submit-btn">
+      <i class="fas" [class.fa-save]="isEditing" [class.fa-user-plus]="!isEditing"></i>
+      {{ isEditing ? 'Actualizar Estudiante' : 'Registrar Estudiante' }}
+    </button>
+    <button type="button" *ngIf="isEditing" (click)="resetForm()" class="cancel-btn">
+      <i class="fas fa-times"></i> Cancelar
+    </button>
+  </div>
+</form>

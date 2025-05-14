@@ -1,0 +1,27 @@
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 25px;
+    border-radius: 5px;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    transition: opacity 0.5s ease-in-out;
+  }
+  
+  .notification.success {
+    background-color: #4CAF50; /* Verde */
+  }
+  
+  .notification.error {
+    background-color: #f44336; /* Rojo */
+  }
+  
+  .notification.show {
+    opacity: 1;
+  }
+  
+  .notification.hide {
+    opacity: 0;
+  }
